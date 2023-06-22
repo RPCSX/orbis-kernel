@@ -1,3 +1,5 @@
+set(CMAKE_POSITION_INDEPENDENT_CODE on)
+
 add_library(obj.orbis-kernel OBJECT
   src/module.cpp
   src/sysvec.cpp
