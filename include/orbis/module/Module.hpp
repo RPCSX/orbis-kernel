@@ -8,6 +8,7 @@
 #include "orbis-config.hpp"
 #include <cstddef>
 #include <vector>
+#include <string>
 
 namespace orbis {
 struct Thread;
