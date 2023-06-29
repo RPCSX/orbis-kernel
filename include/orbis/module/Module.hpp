@@ -18,6 +18,7 @@ struct ModuleNeeded {
   std::string name;
   std::uint16_t version;
   std::uint16_t attr;
+  bool isExport;
 };
 
 enum class SymbolBind : std::uint8_t {
@@ -67,7 +68,8 @@ struct Relocation {
 struct Module {
   Process *proc{};
   std::string vfsPath;
-  char name[256]{};
+  char moduleName[256]{};
+  char soName[256]{};
   ModuleHandle id{};
   uint32_t tlsIndex{};
   ptr<void> tlsInit{};
@@ -112,6 +114,7 @@ struct Module {
   std::vector<ModuleNeeded> neededModules;
   std::vector<ModuleNeeded> neededLibraries;
   std::vector<utils::Ref<Module>> importedModules;
+  std::vector<std::string> needed;
 
   std::atomic<unsigned> references{0};
 

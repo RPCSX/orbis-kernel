@@ -82,7 +82,7 @@ static orbis::SysResult doRelocation(orbis::Process *process,
   auto where32 = reinterpret_cast<std::uint32_t *>(B + rel.offset);
   auto P = reinterpret_cast<std::uintptr_t>(where);
 
-  auto findDefModule = [module, symbol, rel] {
+  auto findDefModule = [module, symbol] {
     if (symbol.moduleIndex == -1 || symbol.bind == orbis::SymbolBind::Local) {
       return std::pair(module, symbol.address);
     }
@@ -110,8 +110,8 @@ static orbis::SysResult doRelocation(orbis::Process *process,
       foundInLibs.push_back(defLib.name);
     }
 
-    std::printf("'%s' uses undefined symbol in '%s' module\n", module->name,
-                defModule->name);
+    std::printf("'%s' ('%s') uses undefined symbol in '%s' module\n", module->moduleName, module->soName,
+                defModule->moduleName);
     if (foundInLibs.size() > 0) {
       std::printf("Requested library is '%s', exists in libraries: [",
                   library.name.c_str());

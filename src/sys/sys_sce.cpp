@@ -298,7 +298,7 @@ orbis::SysResult orbis::sys_dynlib_get_info(Thread *thread,
 
   ModuleInfo result = {};
   result.size = sizeof(ModuleInfo);
-  std::strncpy(result.name, module->name, sizeof(result.name));
+  std::strncpy(result.name, module->moduleName, sizeof(result.name));
   std::memcpy(result.segments, module->segments,
               sizeof(ModuleSegment) * module->segmentCount);
   result.segmentCount = module->segmentCount;
@@ -447,7 +447,7 @@ orbis::sys_dynlib_get_info_ex(Thread *thread, SceKernelModule handle,
 
   ModuleInfoEx result = {};
   result.size = sizeof(ModuleInfoEx);
-  std::strncpy(result.name, module->name, sizeof(result.name));
+  std::strncpy(result.name, module->moduleName, sizeof(result.name));
   result.id = std::to_underlying(handle);
   result.tlsIndex = module->tlsIndex;
   result.tlsInit = module->tlsInit;
