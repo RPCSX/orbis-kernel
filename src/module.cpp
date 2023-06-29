@@ -87,7 +87,11 @@ static orbis::SysResult doRelocation(orbis::Process *process,
       return std::pair(module, symbol.address);
     }
 
-    auto defModule = module->importedModules.at(symbol.moduleIndex);
+    auto &defModule = module->importedModules.at(symbol.moduleIndex);
+    if (!defModule) {
+      return std::pair(module, symbol.address);
+    }
+
     auto library = module->neededLibraries.at(symbol.libraryIndex);
 
     std::vector<std::string> foundInLibs;
