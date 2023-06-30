@@ -1,6 +1,4 @@
 #include "module/Module.hpp"
-#include "module/ModuleInfo.hpp"
-#include "module/ModuleInfoEx.hpp"
 #include "thread.hpp"
 #include <utility>
 
@@ -114,8 +112,8 @@ static orbis::SysResult doRelocation(orbis::Process *process,
       foundInLibs.push_back(defLib.name);
     }
 
-    std::printf("'%s' ('%s') uses undefined symbol in '%s' module\n", module->moduleName, module->soName,
-                defModule->moduleName);
+    std::printf("'%s' ('%s') uses undefined symbol in '%s' module\n",
+                module->moduleName, module->soName, defModule->moduleName);
     if (foundInLibs.size() > 0) {
       std::printf("Requested library is '%s', exists in libraries: [",
                   library.name.c_str());

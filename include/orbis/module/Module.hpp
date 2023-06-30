@@ -114,6 +114,7 @@ struct Module {
   std::vector<ModuleNeeded> neededModules;
   std::vector<ModuleNeeded> neededLibraries;
   std::vector<utils::Ref<Module>> importedModules;
+  std::vector<utils::Ref<Module>> namespaceModules;
   std::vector<std::string> needed;
 
   std::atomic<unsigned> references{0};
