@@ -112,8 +112,27 @@ static orbis::SysResult doRelocation(orbis::Process *process,
       foundInLibs.push_back(defLib.name);
     }
 
-    std::printf("'%s' ('%s') uses undefined symbol in '%s' module\n",
-                module->moduleName, module->soName, defModule->moduleName);
+    for (auto nsDefModule : defModule->namespaceModules) {
+      for (auto defSym : nsDefModule->symbols) {
+        if (defSym.id != symbol.id || defSym.bind == orbis::SymbolBind::Local) {
+          continue;
+        }
+
+        if (defSym.visibility == orbis::SymbolVisibility::Hidden) {
+          std::printf("Ignoring hidden symbol\n");
+          continue;
+        }
+
+        auto defLib = nsDefModule->neededLibraries.at(defSym.libraryIndex);
+
+        if (defLib.name == library.name) {
+          return std::pair(nsDefModule.get(), defSym.address);
+        }
+      }
+    }
+
+    std::printf("'%s' ('%s') uses undefined symbol '%llx' in '%s' ('%s') module\n",
+                module->moduleName, module->soName, (unsigned long long)symbol.id, defModule->moduleName, defModule->soName);
     if (foundInLibs.size() > 0) {
       std::printf("Requested library is '%s', exists in libraries: [",
                   library.name.c_str());
