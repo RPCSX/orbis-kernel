@@ -1,4 +1,5 @@
 #include "sys/sysproto.hpp"
+#include "utils/Logs.hpp"
 
 orbis::SysResult orbis::sys_sync(Thread *thread) { return ErrorCode::NOSYS; }
 orbis::SysResult orbis::sys_quotactl(Thread *thread, ptr<char> path, sint cmd, sint uid, caddr_t arg) { return ErrorCode::NOSYS; }
@@ -9,6 +10,7 @@ orbis::SysResult orbis::sys_fchdir(Thread *thread, sint fd) { return ErrorCode::
 orbis::SysResult orbis::sys_chdir(Thread *thread, ptr<char> path) { return ErrorCode::NOSYS; }
 orbis::SysResult orbis::sys_chroot(Thread *thread, ptr<char> path) { return ErrorCode::NOSYS; }
 orbis::SysResult orbis::sys_open(Thread *thread, ptr<char> path, sint flags, sint mode) {
+  ORBIS_LOG_NOTICE("sys_open", path, flags, mode);
   if (auto open = thread->tproc->ops->open) {
     return open(thread, path, flags, mode);
   }

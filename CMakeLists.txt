@@ -57,6 +57,8 @@ add_library(obj.orbis-kernel OBJECT
   src/sys/sys_vfs.cpp
   src/sys/sys_vm_mmap.cpp
   src/sys/sys_vm_unix.cpp
+
+  src/utils/Logs.cpp
 )
 
 target_link_libraries(obj.orbis-kernel PUBLIC orbis::kernel::config)
@@ -76,4 +78,3 @@ add_library(orbis::kernel-shared ALIAS orbis-kernel-shared)
 
 target_link_libraries(orbis-kernel PUBLIC obj.orbis-kernel)
 target_link_libraries(orbis-kernel-shared PUBLIC obj.orbis-kernel)
-
