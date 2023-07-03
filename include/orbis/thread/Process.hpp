@@ -3,6 +3,7 @@
 #include "orbis-config.hpp"
 #include "orbis/module/Module.hpp"
 #include "orbis/utils/IdMap.hpp"
+#include "orbis/utils/SharedMutex.hpp"
 #include "../thread/types.hpp"
 #include "../thread/Thread.hpp"
 
@@ -20,7 +21,7 @@ struct Process {
   sysentvec *sysent = nullptr;
   ProcessState state = ProcessState::NEW;
   Process *parentProcess = nullptr;
-  std::mutex mtx;
+  shared_mutex mtx;
   void (*onSysEnter)(Thread *thread, int id, uint64_t *args, int argsCount) = nullptr;
   void (*onSysExit)(Thread *thread, int id, uint64_t *args, int argsCount, SysResult result) = nullptr;
   ptr<void> processParam = nullptr;

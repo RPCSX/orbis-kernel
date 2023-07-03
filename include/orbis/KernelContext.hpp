@@ -1,6 +1,7 @@
 #pragma once
 #include "orbis/thread/Process.hpp"
 #include "utils/LinkedNode.hpp"
+#include "utils/SharedMutex.hpp"
 
 #include <algorithm>
 #include <mutex>
@@ -89,7 +90,7 @@ public:
   }
 
 private:
-  mutable std::mutex m_proc_mtx;
+  mutable shared_mutex m_proc_mtx;
   utils::LinkedNode<Process> *m_processes = nullptr;
   std::vector<EventListener *> m_event_listeners;
 };
